@@ -1,3 +1,7 @@
+<script>
+  import { currentUser, families } from "$lib/stores/user";
+</script>
+
 <div class="navbar bg-base-100">
   <div class="navbar-start">
     <div class="dropdown">
@@ -22,9 +26,16 @@
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li><a href="/timeline">Timeline</a></li>
-      <li><a href="/family">Your Family</a></li>
-      <li><a href="/settings">Settings</a></li>
+      <li>
+        <a href={`/family/${$families[0].id}/timeline`}>Timeline</a>
+      </li>
+      {#if $currentUser != null}
+        <li><a href={`/family/${$families[0].id}`}>Your Family</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/logout">Logout</a></li>
+      {:else}
+        <li><a href="/login">Login</a></li>
+      {/if}
     </ul>
   </div>
   <div class="navbar-end">

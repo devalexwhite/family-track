@@ -24,9 +24,19 @@ export async function load({ params }) {
       dateBuckets.set(dateKey, []);
     }
 
-    console.log(event.expand);
-    dateBuckets.get(dateKey).push(event);
+    dateBuckets.get(dateKey).unshift(event);
   });
 
-  return { eventsBuckets: dateBuckets };
+
+  const family = await pb.collection("families").getOne(familyID, {
+    expand: "children"
+  })
+
+  const eventTypes = await pb.collection("eventTypes").getFullList({
+    filter: `family="${familyID}"`,
+  })
+
+  
+
+  return { eventsBuckets: dateBuckets, family, eventTypes };
 }
