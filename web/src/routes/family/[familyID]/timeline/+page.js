@@ -18,7 +18,7 @@ export async function load({ params }) {
     const utcTime = new Date(event.time);
     const localTime = new Date(utcTime.toLocaleString());
 
-    const dateKey = localTime.toISOString().split("T")[0];
+    const dateKey = localTime.toLocaleDateString().split("T")[0];
 
     if (!dateBuckets.has(dateKey)) {
       dateBuckets.set(dateKey, []);
@@ -27,16 +27,30 @@ export async function load({ params }) {
     dateBuckets.get(dateKey).unshift(event);
   });
 
+  if (!dateBuckets.has(new Date().toLocaleDateString().split("T")[0])) {
+    dateBuckets.set(new Date().toLocaleDateString().split("T")[0], []);
+  }
+
+  const sortedDateBuckets = Array.from(dateBuckets.entries())
+    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+    .map(([dateKey, events]) => ({ dateKey, events }));
+
+  const dateBucketsArray = sortedDateBuckets.map(({ dateKey, events }) => ({
+    dateKey,
+    events: events.sort((a, b) => new Date(b.time) - new Date(a.time)),
+  }));
+
+  const dateBucketsDescending = dateBucketsArray.sort(
+    (a, b) => new Date(b.dateKey) - new Date(a.dateKey)
+  );
 
   const family = await pb.collection("families").getOne(familyID, {
-    expand: "children"
-  })
+    expand: "children",
+  });
 
   const eventTypes = await pb.collection("eventTypes").getFullList({
     filter: `family="${familyID}"`,
-  })
+  });
 
-  
-
-  return { eventsBuckets: dateBuckets, family, eventTypes };
+  return { eventsBuckets: dateBucketsDescending, family, eventTypes };
 }

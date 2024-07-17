@@ -31,6 +31,13 @@
           </a>
         </li>
       {/each}
+      <li
+        class="w-48 h-48 px-8 py-14 border border-dashed border-accent rounded-xl mb-8 hover:bg-primary hover:text-primary-content text-primary cursor-pointer"
+      >
+        <button class="w-full h-full font-medium text-2xl text-center">
+          Invite adult
+        </button>
+      </li>
     </ul>
   </section>
 
@@ -61,6 +68,13 @@
           </a>
         </li>
       {/each}
+      <li
+        class="w-48 h-48 px-8 py-14 border border-dashed border-accent rounded-xl mb-8 hover:bg-primary hover:text-primary-content text-primary cursor-pointer"
+      >
+        <button class="w-full h-full font-medium text-2xl text-center">
+          Add kid
+        </button>
+      </li>
     </ul>
   </section>
 </div>

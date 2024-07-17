@@ -31,7 +31,6 @@
       </li>
       {#if $currentUser != null}
         <li><a href={`/family/${$families[0].id}`}>Your Family</a></li>
-        <li><a href="/settings">Settings</a></li>
         <li><a href="/logout">Logout</a></li>
       {:else}
         <li><a href="/login">Login</a></li>
@@ -39,12 +38,14 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a href="/profile">
+    <a href="/settings">
       <div class="avatar">
         <div
           class="rounded-full w-10 bg-gray-400 text-black text-center flex items-center justify-center"
         >
-          AW
+          <img
+            src={`https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURI($currentUser.name)}`}
+          />
         </div>
       </div>
     </a>

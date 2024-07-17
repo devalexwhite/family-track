@@ -21,16 +21,16 @@
       <header class="mb-12 flex flex-row items-center justify-center gap-8">
         <div class="h-[1px] bg-accent flex-1"></div>
         <h3 class="font-medium text-4xl">
-          {#if new Date().toDateString() == new Date(bucket[0]).toDateString()}
+          {#if new Date().toDateString() == new Date(bucket.dateKey).toDateString()}
             Today
           {:else}
-            {bucket[0]}
+            {bucket.dateKey}
           {/if}
         </h3>
         <div class="h-[1px] bg-accent flex-1"></div>
       </header>
       <main>
-        {#if new Date().toDateString() == new Date(bucket[0]).toDateString()}
+        {#if new Date().toLocaleDateString() == new Date(bucket.dateKey).toLocaleDateString()}
           <div
             class="w-full px-8 py-14 border border-dashed border-accent rounded-xl mb-8 hover:bg-primary hover:text-primary-content text-primary cursor-pointer"
           >
@@ -43,7 +43,7 @@
           </div>
         {/if}
         <ul class="flex flex-col gap-8">
-          {#each bucket[1] as event}
+          {#each bucket.events as event}
             <li
               class="card bg-base-200 text-base-content hover:bg-accent hover:text-accent-content transition-all w-full shadow-sm"
             >
